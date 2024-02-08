@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "Reading Ruler",
-    "version": "1.0.0",
+    "name": "The Reading Ruler",
+    "version": "1.0.1",
     "description": "A ruler that overlays a website to help you read. Helpful for people who are neurodivergent and struggle with reading or retaining information.",
     "author": "webDevLiam",
     "permissions": [
@@ -9,7 +9,7 @@
     ],
     "action": {
         "default_popup": "popup.html",
-        "default_title": "Reading Ruler"
+        "default_title": "The Reading Ruler"
     },
     "content_scripts": [
         {
