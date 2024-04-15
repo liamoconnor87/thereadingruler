@@ -1,10 +1,11 @@
 var isChrome = navigator.userAgent.indexOf("Chrome") !== -1;
 var isFirefox = navigator.userAgent.indexOf("Firefox") !== -1;
+var thisBrowser;
 
 if (isChrome) {
-    let thisBrowser = chrome
+    thisBrowser = chrome
 } else if (isFirefox) {
-    let thisBrowser = browser
+    thisBrowser = browser
 }
 
 var rrCheckbox = document.getElementById("rr-checkbox");
