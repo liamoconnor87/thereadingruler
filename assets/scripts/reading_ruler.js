@@ -1,3 +1,12 @@
+var isChrome = navigator.userAgent.indexOf("Chrome") !== -1;
+var isFirefox = navigator.userAgent.indexOf("Firefox") !== -1;
+
+if (isChrome) {
+    let thisBrowser = chrome
+} else if (isFirefox) {
+    let thisBrowser = browser
+}
+
 var styleElement = document.createElement('style');
 styleElement.innerHTML = `
 #rr-line {
@@ -62,7 +71,7 @@ document.addEventListener("mouseout", function (event) {
 
 //  Refresh the page when the toggle state changes
 function refreshPage() {
-    browser.storage.local.get("toggleState").then(({ toggleState }) => {
+    thisBrowser.storage.local.get("toggleState").then(({ toggleState }) => {
         if (toggleState) {
             if (lineDiv && overlayDiv) {
                 lineDiv.style.display = "block";
@@ -77,6 +86,6 @@ function refreshPage() {
     });
 }
 
-browser.storage.onChanged.addListener(refreshPage);
+thisBrowser.storage.onChanged.addListener(refreshPage);
 
 refreshPage();

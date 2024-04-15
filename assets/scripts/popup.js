@@ -1,3 +1,12 @@
+var isChrome = navigator.userAgent.indexOf("Chrome") !== -1;
+var isFirefox = navigator.userAgent.indexOf("Firefox") !== -1;
+
+if (isChrome) {
+    let thisBrowser = chrome
+} else if (isFirefox) {
+    let thisBrowser = browser
+}
+
 var rrCheckbox = document.getElementById("rr-checkbox");
 var toggleStatus = document.getElementById("switch-status");
 
@@ -10,15 +19,15 @@ if (rrCheckbox.checked) {
 rrCheckbox.addEventListener("change", function () {
     if (rrCheckbox.checked) {
         toggleStatus.innerHTML = `<strong>O</strong>n`;
-        browser.storage.local.set({ toggleState: true });
+        thisBrowser.storage.local.set({ toggleState: true });
     } else {
         toggleStatus.innerHTML = `<strong>Of</strong>f`;
-        browser.storage.local.set({ toggleState: false });
+        thisBrowser.storage.local.set({ toggleState: false });
     }
 })
 
 // Store that bad boy
-browser.storage.local.get("toggleState").then(({ toggleState }) => {
+thisBrowser.storage.local.get("toggleState").then(({ toggleState }) => {
     if (toggleState) {
         rrCheckbox.checked = true;
     } else {
