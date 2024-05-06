@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "The Reading Ruler",
-    "version": "1.0.1",
-    "description": "A ruler that overlays a website to help you read. Helpful for people who are neurodivergent and struggle with reading or retaining information.",
+    "version": "2.0.0",
+    "description": "A ruler that overlays a website to help you read & retain information. Helpful for people who are neurodivergent.",
     "author": "webDevLiam",
     "permissions": [
         "storage"
