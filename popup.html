@@ -38,7 +38,7 @@
                     Line colour:
                 </div>
                 <div class="col-setting-val col">
-                    <input type="text" class="set" placeholder="#000000">
+                    <input id="line-colour" type="text" class="set" placeholder="R, G, B">
                 </div>
             </div>
             <div class="row">
@@ -46,7 +46,7 @@
                     Overlay colour:
                 </div>
                 <div class="col-setting-val col">
-                    <input type="text" class="set" placeholder="#000000">
+                    <input id="overlay-colour" type="text" class="set" placeholder="R, G, B">
                 </div>
             </div>
             <div class="row">
@@ -54,7 +54,7 @@
                     Overlay opacity:
                 </div>
                 <div class="col-setting-val col">
-                    <input type="number" class="set arrows" placeholder="80">%
+                    <input id="overlay-opacity" type="number" class="set arrows" placeholder="80" min="0" max="100">%
                 </div>
             </div>
             <div class="row">
@@ -90,8 +90,8 @@
 </html>
 
 <!-- TODO:
-- create the design made with actual fields
-- create the JS that will be used to see changes in the settings and apply to the ruler
-- save the seetings in the cookie
-- moving mouse off of pop up closes pop up
-- give it a shortcut for toggle on/off -->
+- create hotkey functionality to toggle on/off
+- test hotkey
+- refactor
+- commands in permissions breaks the app
+-->
