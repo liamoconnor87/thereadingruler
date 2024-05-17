@@ -37,24 +37,6 @@ thisBrowser.storage.local.get("toggleState").then(({ toggleState }) => {
     }
 });
 
-// Toggle state hotkey
-thisBrowser.commands.onCommand.addListener(function(command) {
-    if (command === "toggle-ruler") {
-        thisBrowser.storage.local.get("toggleState").then(({ toggleState }) => {
-            if (toggleState === true) {
-                thisBrowser.storage.local.set({ toggleState: false });
-                rrCheckbox.checked = false;
-                toggleStatus.innerHTML = `<strong>Of</strong>f`;
-            } else {
-                thisBrowser.storage.local.set({ toggleState: true });
-                rrCheckbox.checked = true;
-                toggleStatus.innerHTML = `<strong>O</strong>n`;
-
-            }
-        })
-    }
-})
-
 // Ruler position
 const options = ["Below cursor", "Above cursor", "On cursor"];
 const arrowLeft = document.getElementById("arrow-left");
@@ -92,6 +74,7 @@ arrowRight.addEventListener("click", () => {
 
 // Overlay opacity
 const overlayOpacitySettings = document.getElementById("overlay-opacity");
+
 thisBrowser.storage.local.get("overlayOpacity").then(({ overlayOpacity }) => {
     if (overlayOpacity) {
         overlayOpacitySettings.value = overlayOpacity;
@@ -109,12 +92,13 @@ overlayOpacitySettings.addEventListener("input", () => {
 
 // Overlay colour
 const overlayColourSettings = document.getElementById("overlay-colour");
+
 thisBrowser.storage.local.get("overlayColour").then(({ overlayColour }) => {
     if (overlayColour) {
         overlayColourSettings.value = overlayColour;
     }
     else {
-        overlayColourSettings.value = "0, 0, 0";
+        overlayColourSettings.value = "27, 46, 83";
     }
 })
 
@@ -126,12 +110,13 @@ overlayColourSettings.addEventListener("input", () => {
 
 // Line Colour
 const lineColourSettings = document.getElementById("line-colour");
+
 thisBrowser.storage.local.get("lineColour").then(({ lineColour }) => {
     if (lineColour) {
         lineColourSettings.value = lineColour;
     }
     else {
-        lineColourSettings.value = "0, 0, 0";
+        lineColourSettings.value = "240, 109, 255";
     }
 })
 

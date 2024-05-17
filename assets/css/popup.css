@@ -116,10 +116,21 @@ input:checked+.slider:before {
     background-color: inherit;
     width: 100px;
     text-align: end;
-    border: none;
-    outline: none;
-    background: none;
-    box-shadow: none;
+    border: rgb(60, 26, 64);
+    outline: rgb(60, 26, 64);
+    background: rgb(60, 26, 64);
+    box-shadow: 2px 2px 0 rgb(0, 0, 0);
+    letter-spacing: -1px;
+    font-size: 10.5px;
+}
+
+#line-colour, #overlay-colour, #overlay-opacity {
+    width: 100%;
+}
+
+#overlay-opacity {
+    width: 90%;
+    float: left;
 }
 
 .arrows {
@@ -143,6 +154,8 @@ input:checked+.slider:before {
     color: white;
     width: auto;
     text-align: right;
+    padding: 0;
+    margin-right: 12px;
 }
 
 .set{

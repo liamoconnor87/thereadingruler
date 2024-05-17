@@ -21,7 +21,7 @@ styleElement.innerHTML = `
     opacity: 0;
     transition: opacity 0.3s ease;
     background-color: rgb(0, 0, 0, .8);
-    border-top: 2px solid rgb(0, 0, 0);
+    border-top: 2px solid rgb(24, 232, 138);
 }`;
 
 
@@ -58,7 +58,7 @@ document.addEventListener("mousemove", async function (event) {
         if (overlayColour) {
             ovColValue = overlayColour;
         } else {
-            ovColValue = "0, 0, 0";
+            ovColValue = "27, 46, 83";
         }
     })
 
@@ -66,7 +66,7 @@ document.addEventListener("mousemove", async function (event) {
         if (lineColour) {
             lineColValue = lineColour;
         } else {
-            lineColValue = "0, 0, 0";
+            lineColValue = "240, 109, 255";
         }
     })
 
@@ -101,20 +101,3 @@ function refreshPage() {
 thisBrowser.storage.onChanged.addListener(refreshPage);
 
 refreshPage();
-
-// Not working
-// Toggle state hotkey
-thisBrowser.commands.onCommand.addListener(function (command) {
-    if (command === "toggle-ruler") {
-        thisBrowser.storage.local.get("toggleState").then(({ toggleState }) => {
-            if (toggleState === true) {
-                thisBrowser.storage.local.set({ toggleState: false });
-                overlayDiv.style.display = "none";
-            } else {
-                thisBrowser.storage.local.set({ toggleState: true });
-                overlayDiv.style.display = "block";
-
-            }
-        })
-    }
-})
