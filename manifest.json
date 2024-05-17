@@ -5,8 +5,7 @@
     "description": "A ruler that overlays a website to help you read & retain information. Helpful for people who are neurodivergent.",
     "author": "webDevLiam",
     "permissions": [
-        "storage",
-        "commands"
+        "storage"
     ],
     "action": {
         "default_popup": "popup.html",
@@ -27,11 +26,6 @@
     "browser_specific_settings": {
         "gecko": {
             "id": "liamoconnor87@gmail.com"
-        }
-    },
-    "commands": {
-        "toggle-ruler":{
-            "description": "Toggle the ruler using a hotkey."
         }
     }
 }
