@@ -34,7 +34,6 @@ body {
 }
 
 /* SWITCH */
-
 .switcher {
     margin: auto;
     display: flex;
@@ -105,7 +104,6 @@ input:checked+.slider:before {
 }
 
 /* SETTINGS */
-
 .settings {
     font-size: 11px;
     margin-bottom: 12px;
@@ -170,7 +168,6 @@ input:checked+.slider:before {
     padding-right: 0;
 }
 /* FOOTER */
-
 .footer {
     border-top: 1px solid rgb(240, 109, 255);
     padding-bottom: 5px;
@@ -184,7 +181,7 @@ input:checked+.slider:before {
     margin-left: 5px;
 }
 
-.buy-coffee i:hover {
+.buy-coffee svg:hover {
     color: #18e88a;
 }
 
