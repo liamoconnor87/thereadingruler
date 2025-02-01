@@ -16,7 +16,7 @@ styleElement.innerHTML = `
     height: calc(100% - 53px);
     bottom: 0;
     left: 0;
-    z-index: 9999;
+    z-index: 99999;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s ease;
