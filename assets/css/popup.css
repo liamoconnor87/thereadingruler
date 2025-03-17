@@ -73,7 +73,6 @@ body {
     -webkit-transition: .2s;
     transition: .2s;
     box-shadow: 5px 5px 0 rgb(8, 14, 24);
-    color: white !important;
 }
 
 .slider:before {
@@ -87,7 +86,6 @@ body {
     -webkit-transition: .2s;
     transition: .2s;
     box-shadow: 2px 2px 0 rgb(0, 0, 0);
-    color: white !important;
 }
 
 input:checked+.slider{
