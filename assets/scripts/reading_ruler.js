@@ -20,7 +20,7 @@ styleElement.innerHTML = `
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s ease;
-    background-color: rgb(0, 0, 0, .8);
+    background-color: rgb(0, 0, 0, .7);
     border-top: 2px solid rgb(24, 232, 138);
 }`;
 
@@ -58,7 +58,7 @@ document.addEventListener("mousemove", async function (event) {
         if (overlayColour) {
             ovColValue = overlayColour;
         } else {
-            ovColValue = "27, 46, 83";
+            ovColValue = "0, 0, 0";
         }
     })
 
