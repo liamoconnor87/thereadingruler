@@ -157,7 +157,7 @@ input:checked+.slider:before {
 }
 
 .set{
-    color: rgb(240, 109, 255);
+    color: rgb(240, 109, 255, 0.6);
 }
 
 #ruler-position {
