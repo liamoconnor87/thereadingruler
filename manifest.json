@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "The Reading Ruler",
-    "version": "2.0.5",
+    "version": "2.1.0",
     "description": "A ruler that overlays a webpage to help you read & retain information. Helpful for people who are neurodivergent.",
     "author": "webDevLiam",
     "permissions": [
@@ -27,5 +27,17 @@
         "gecko": {
             "id": "liamoconnor87@gmail.com"
         }
+    },
+    "commands": {
+        "toggle-overlay": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+U",
+                "mac": "Command+Shift+U"
+            },
+            "description": "Toggle the overlay on/off"
+        }
+    },
+    "background": {
+        "service_worker": "assets/scripts/background.js"
     }
 }

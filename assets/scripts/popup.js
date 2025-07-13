@@ -16,7 +16,7 @@ window.onload = function () {
     const rulerPosition = document.getElementById("ruler-position");
 
     // Options for ruler position
-    const options = ["Below cursor", "Above cursor", "On cursor"];
+    const cursorPosition = ["Below cursor", "Above cursor", "On cursor"];
     let optionIndex;
 
     // Initialize toggle status
@@ -34,7 +34,7 @@ window.onload = function () {
     }
 
     // Initialize settings from storage
-    function initializeSettings() {
+    function getSettings() {
         thisBrowser.storage.local.get(["toggleState", "ruler", "overlayOpacity", "overlayColour", "lineColour"]).then((result) => {
             // Toggle state
             if (result.toggleState !== undefined) {
@@ -43,9 +43,9 @@ window.onload = function () {
             }
             updateToggleStatus();
 
-            // Ruler position
+            // Ruler position + cursor position
             optionIndex = result.ruler !== undefined ? result.ruler : 0;
-            rulerPosition.innerHTML = options[optionIndex];
+            rulerPosition.innerHTML = cursorPosition[optionIndex];
 
             // Overlay opacity
             overlayOpacitySettings.value = result.overlayOpacity !== undefined ? result.overlayOpacity : 70;
@@ -68,7 +68,7 @@ window.onload = function () {
     arrowLeft.addEventListener("click", () => {
         if (optionIndex > 0) {
             optionIndex--;
-            rulerPosition.innerHTML = options[optionIndex];
+            rulerPosition.innerHTML = cursorPosition[optionIndex];
             thisBrowser.storage.local.set({ ruler: optionIndex });
         }
     });
@@ -76,7 +76,7 @@ window.onload = function () {
     arrowRight.addEventListener("click", () => {
         if (optionIndex < 2) {
             optionIndex++;
-            rulerPosition.innerHTML = options[optionIndex];
+            rulerPosition.innerHTML = cursorPosition[optionIndex];
             thisBrowser.storage.local.set({ ruler: optionIndex });
         }
     });
@@ -93,6 +93,12 @@ window.onload = function () {
         thisBrowser.storage.local.set({ lineColour: lineColourSettings.value });
     });
 
+    chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+        if (request.action === "toggleOverlay") {
+            getSettings();
+        }
+    });
+
     // Initialize settings
-    initializeSettings();
+    getSettings();
 };
