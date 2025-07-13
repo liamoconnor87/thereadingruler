@@ -1,151 +1,104 @@
 window.onload = function () {
+    // Browser detection
     var isChrome = navigator.userAgent.indexOf("Chrome") !== -1;
     var isFirefox = navigator.userAgent.indexOf("Firefox") !== -1;
-    var thisBrowser;
+    var thisBrowser = isChrome ? chrome : (isFirefox ? browser : null);
 
-    if (isChrome) {
-        thisBrowser = chrome
-    } else if (isFirefox) {
-        thisBrowser = browser
-    }
-
+    // DOM elements
     var rrCheckbox = document.getElementById("rr-checkbox");
     var toggleStatus = document.getElementById("switch-status");
-
-    if (rrCheckbox.checked) {
-        toggleStatus.innerHTML = `<strong>O</strong>n`;
-    } else {
-        toggleStatus.innerHTML = `<strong>Of</strong>f`;
-    }
-
     const inputs = document.querySelectorAll('.settings input');
     const overlayOpacitySettings = document.getElementById("overlay-opacity");
     const overlayColourSettings = document.getElementById("overlay-colour");
     const lineColourSettings = document.getElementById("line-colour");
     const arrowLeft = document.getElementById("arrow-left");
     const arrowRight = document.getElementById("arrow-right");
+    const rulerPosition = document.getElementById("ruler-position");
 
-    rrCheckbox.addEventListener("change", function () {
-        if (rrCheckbox.checked) {
-            toggleStatus.innerHTML = `<strong>O</strong>n`;
-            thisBrowser.storage.local.set({ toggleState: true });
-            neonGlow(true);
-        } else {
-            toggleStatus.innerHTML = `<strong>Of</strong>f`;
-            thisBrowser.storage.local.set({ toggleState: false });
-            neonGlow(false);
-        }
-    })
+    // Options for ruler position
+    const cursorPosition = ["Below cursor", "Above cursor", "On cursor"];
+    let optionIndex;
 
-    // Get toggle state
-    thisBrowser.storage.local.get("toggleState").then(({ toggleState }) => {
-        if (toggleState) {
-            rrCheckbox.checked = true;
-            neonGlow(true);
-        } else {
-            rrCheckbox.checked = false;
-            neonGlow(false);
-            toggleStatus.innerHTML = `<strong>Of</strong>f`;
-        }
-    });
+    // Initialize toggle status
+    function updateToggleStatus() {
+        toggleStatus.innerHTML = rrCheckbox.checked ? `<strong>O</strong>n` : `<strong>Of</strong>f`;
+    }
 
-    // Add neon glow to field text
+    // Neon glow effect
     function neonGlow(bool) {
-        // Some 'rustic' electricity travel delay...
         setTimeout(() => {
-            if (bool == true) {
-                // On
-                inputs.forEach(input => {
-                    input.style.color = 'rgb(240, 109, 255)';
-
-                })
-            } else {
-                // Off
-                inputs.forEach(input => {
-                    input.style.color = 'rgb(240, 109, 255, .6)';
-                })
-            }
+            inputs.forEach(input => {
+                input.style.color = bool ? 'rgb(240, 109, 255)' : 'rgba(240, 109, 255, 0.6)';
+            });
         }, 100);
     }
 
-    // Ruler position
-    const options = ["Below cursor", "Above cursor", "On cursor"];
-    var rulerPosition = document.getElementById("ruler-position");
-    let optionIndex;
+    // Initialize settings from storage
+    function getSettings() {
+        thisBrowser.storage.local.get(["toggleState", "ruler", "overlayOpacity", "overlayColour", "lineColour"]).then((result) => {
+            // Toggle state
+            if (result.toggleState !== undefined) {
+                rrCheckbox.checked = result.toggleState;
+                neonGlow(result.toggleState);
+            }
+            updateToggleStatus();
 
-    // Get ruler position
-    thisBrowser.storage.local.get("ruler").then(({ ruler }) => {
-        if (ruler) {
-            optionIndex = ruler;
-            rulerPosition.innerHTML = options[optionIndex];
-        }
-        else {
-            optionIndex = 0;
-            rulerPosition.innerHTML = options[optionIndex];
-        }
+            // Ruler position + cursor position
+            optionIndex = result.ruler !== undefined ? result.ruler : 0;
+            rulerPosition.innerHTML = cursorPosition[optionIndex];
+
+            // Overlay opacity
+            overlayOpacitySettings.value = result.overlayOpacity !== undefined ? result.overlayOpacity : 70;
+
+            // Overlay colour
+            overlayColourSettings.value = result.overlayColour !== undefined ? result.overlayColour : "0, 0, 0";
+
+            // Line colour
+            lineColourSettings.value = result.lineColour !== undefined ? result.lineColour : "240, 109, 255";
+        });
+    }
+
+    // Event listeners
+    rrCheckbox.addEventListener("change", function () {
+        updateToggleStatus();
+        thisBrowser.storage.local.set({ toggleState: rrCheckbox.checked });
+        neonGlow(rrCheckbox.checked);
     });
 
     arrowLeft.addEventListener("click", () => {
         if (optionIndex > 0) {
             optionIndex--;
-            rulerPosition.innerHTML = options[optionIndex];
+            rulerPosition.innerHTML = cursorPosition[optionIndex];
             thisBrowser.storage.local.set({ ruler: optionIndex });
         }
-    })
+    });
 
     arrowRight.addEventListener("click", () => {
         if (optionIndex < 2) {
             optionIndex++;
-            rulerPosition.innerHTML = options[optionIndex];
+            rulerPosition.innerHTML = cursorPosition[optionIndex];
             thisBrowser.storage.local.set({ ruler: optionIndex });
-        }
-    })
-
-    // Overlay opacity
-    thisBrowser.storage.local.get("overlayOpacity").then(({ overlayOpacity }) => {
-        if (overlayOpacity) {
-            overlayOpacitySettings.value = overlayOpacity;
-        }
-        else {
-            overlayOpacitySettings.value = 70;
         }
     });
 
     overlayOpacitySettings.addEventListener("input", () => {
-        thisBrowser.storage.local.set({
-            overlayOpacity: overlayOpacitySettings.value
-        });
-    })
-
-    // Overlay colour
-    thisBrowser.storage.local.get("overlayColour").then(({ overlayColour }) => {
-        if (overlayColour) {
-            overlayColourSettings.value = overlayColour;
-        }
-        else {
-            overlayColourSettings.value = "0, 0, 0";
-        }
-    })
+        thisBrowser.storage.local.set({ overlayOpacity: overlayOpacitySettings.value });
+    });
 
     overlayColourSettings.addEventListener("input", () => {
-        thisBrowser.storage.local.set({
-            overlayColour: overlayColourSettings.value
-        });
-    })
-
-    // Line Colour
-    thisBrowser.storage.local.get("lineColour").then(({ lineColour }) => {
-        if (lineColour) {
-            lineColourSettings.value = lineColour;
-        }
-        else {
-            lineColourSettings.value = "240, 109, 255";
-        }
-    })
+        thisBrowser.storage.local.set({ overlayColour: overlayColourSettings.value });
+    });
 
     lineColourSettings.addEventListener("input", () => {
-        thisBrowser.storage.local.set({
-            lineColour: lineColourSettings.value
-        });
-    })
-}
+        thisBrowser.storage.local.set({ lineColour: lineColourSettings.value });
+    });
+
+    chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+        if (request.action === "toggleOverlay") {
+            getSettings();
+        }
+    });
+
+    // Initialize settings
+    getSettings();
+};
