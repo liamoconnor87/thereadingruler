@@ -1,12 +1,4 @@
-var isChrome = navigator.userAgent.indexOf("Chrome") !== -1;
-var isFirefox = navigator.userAgent.indexOf("Firefox") !== -1;
-var thisBrowser;
-
-if (isChrome) {
-    thisBrowser = chrome
-} else if (isFirefox) {
-    thisBrowser = browser
-}
+var thisBrowser = typeof browser !== "undefined" ? browser : chrome;
 
 var styleElement = document.createElement('style');
 styleElement.innerHTML = `
@@ -20,8 +12,8 @@ styleElement.innerHTML = `
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s ease;
-    background-color: rgb(0, 0, 0, .7);
-    border-top: 2px solid rgb(24, 232, 138);
+    background-color: rgba(${RR_DEFAULT_OVERLAY_RGB}, .7);
+    border-top: 2px solid rgb(${RR_BRAND_TEAL_RGB});
 }`;
 
 
@@ -30,51 +22,41 @@ overlayDiv.id = 'rr-overlay';
 document.body.appendChild(overlayDiv);
 document.body.appendChild(styleElement);
 
-document.addEventListener("mousemove", async function (event) {
-    // Janky but working for now
-    thisBrowser.storage.local.get("ruler").then(({ ruler }) => {
-        if (ruler == 2) {
-            mouseY = event.clientY;
-        } else if (ruler == 1) {
-            mouseY = event.clientY - 17;
-        } else {
-            mouseY = event.clientY + 17;
-        }
+// Cached settings - refreshed on load and whenever storage changes, rather than
+// re-read on every mousemove, which raced the paint below against the storage read
+var rulerOption = 0;
+var opacityValue = 0.8;
+var overlayColourValue = RR_DEFAULT_OVERLAY_RGB;
+var lineColourValue = RR_ACCENT_RGB;
+
+function refreshSettings() {
+    thisBrowser.storage.local.get(["ruler", "overlayOpacity", "overlayColour", "lineColour"]).then((result) => {
+        rulerOption = result.ruler !== undefined ? result.ruler : 0;
+        opacityValue = result.overlayOpacity !== undefined ? result.overlayOpacity / 100 : 0.8;
+        overlayColourValue = result.overlayColour !== undefined ? result.overlayColour : RR_DEFAULT_OVERLAY_RGB;
+        lineColourValue = result.lineColour !== undefined ? result.lineColour : RR_ACCENT_RGB;
     });
+}
+
+document.addEventListener("mousemove", function (event) {
+    var mouseY;
+    if (rulerOption == 2) {
+        mouseY = event.clientY;
+    } else if (rulerOption == 1) {
+        mouseY = event.clientY - 17;
+    } else {
+        mouseY = event.clientY + 17;
+    }
 
     var windowHeight = window.innerHeight;
     var overlay = document.querySelector("#rr-overlay");
     var overlayHeight = windowHeight - mouseY; // Calculate the height from the bottom of the window
 
-    thisBrowser.storage.local.get("overlayOpacity").then(({ overlayOpacity }) => {
-        if (overlayOpacity) {
-            opacityValue = overlayOpacity / 100;
-        } else {
-            opacityValue = 0.8;
-        }
-    })
-
-    thisBrowser.storage.local.get("overlayColour").then(({ overlayColour }) => {
-        if (overlayColour) {
-            ovColValue = overlayColour;
-        } else {
-            ovColValue = "0, 0, 0";
-        }
-    })
-
-    thisBrowser.storage.local.get("lineColour").then(({ lineColour }) => {
-        if (lineColour) {
-            lineColValue = lineColour;
-        } else {
-            lineColValue = "240, 109, 255";
-        }
-    })
-
     overlay.style.height = overlayHeight + "px";
     overlay.style.bottom = 0; // Position the overlay at the bottom of the window
     overlay.style.opacity = 1; // Make the overlay visible
-    overlay.style.backgroundColor = `rgba(${ovColValue}, ${opacityValue})`;
-    overlay.style.borderTopColor = `rgb(${lineColValue})`;
+    overlay.style.backgroundColor = `rgba(${overlayColourValue}, ${opacityValue})`;
+    overlay.style.borderTopColor = `rgb(${lineColourValue})`;
 });
 
 document.addEventListener("mouseout", function (event) {
@@ -86,18 +68,16 @@ document.addEventListener("mouseout", function (event) {
 //  Refresh the page when the toggle state changes
 function refreshPage() {
     thisBrowser.storage.local.get("toggleState").then(({ toggleState }) => {
-        if (toggleState) {
-            if (overlayDiv) {
-                overlayDiv.style.display = "block";
-            }
-        } else {
-            if (overlayDiv) {
-                overlayDiv.style.display = "none";
-            }
+        if (overlayDiv) {
+            overlayDiv.style.display = toggleState ? "block" : "none";
         }
     });
 }
 
-thisBrowser.storage.onChanged.addListener(refreshPage);
+thisBrowser.storage.onChanged.addListener(function () {
+    refreshPage();
+    refreshSettings();
+});
 
 refreshPage();
+refreshSettings();

@@ -9,8 +9,13 @@
     <link rel="stylesheet" type="text/css" href="assets/css/popup.css">
     <style>
         @font-face {
-            font-family: "Sixtyfour";
-            src: url("assets/googlefont/Sixtyfour-Regular.ttf") format('truetype');
+            font-family: "OpenDyslexic";
+            src: url("assets/googlefont/OpenDyslexic-Regular.otf") format('opentype');
+        }
+        @font-face {
+            font-family: "OpenDyslexic";
+            font-weight: bold;
+            src: url("assets/googlefont/OpenDyslexic-Bold.otf") format('opentype');
         }
     </style>
 </head>
@@ -26,40 +31,42 @@
                     <label class="switch">
                         <input id="rr-checkbox" type="checkbox">
                         <span class="slider" for="rr-checkbox"></span>
-                        <p id="switch-status">off*</p>
                     </label>
                 </div>
+                <p id="switch-status">off*</p>
             </div>
         </div>
 
         <div class="container settings">
             <div class="row">
-                <div class="col col-setting col-7">
-                    Line colour:
+                <div class="col col-setting col-6">
+                    <strong>Lin</strong>e <strong>col</strong>our:
                 </div>
-                <div class="col-setting-val col">
+                <div class="col-setting-val col colour-row">
+                    <input id="line-colour-picker" type="color" class="colour-picker">
                     <input id="line-colour" type="text" class="set" placeholder="R, G, B" maxlength="13">
                 </div>
             </div>
             <div class="row">
-                <div class="col-setting col-7">
-                    Overlay colour:
+                <div class="col-setting col-6">
+                    <strong>Ove</strong>rlay <strong>col</strong>our:
                 </div>
-                <div class="col-setting-val col">
+                <div class="col-setting-val col colour-row">
+                    <input id="overlay-colour-picker" type="color" class="colour-picker">
                     <input id="overlay-colour" type="text" class="set" placeholder="R, G, B" maxlength="13">
                 </div>
             </div>
             <div class="row">
                 <div class="col-setting col-7">
-                    Overlay opacity:
+                    <strong>Ove</strong>rlay <strong>opa</strong>city:
                 </div>
                 <div class="col-setting-val col">
-                    <input id="overlay-opacity" type="number" class="set arrows" placeholder="80">%
+                    <input id="overlay-opacity" type="number" class="set arrows" placeholder="70">%
                 </div>
             </div>
             <div class="row">
                 <div class="col-setting col-5">
-                    Position:
+                    <strong>Pos</strong>ition:
                 </div>
                 <div class="col-setting-val col-1">
                     <span id="arrow-left" class="set pointer">< </span>
@@ -73,7 +80,7 @@
             <div class="row">
                 <div class="col-8">
                     <a class="buy-coffee" href="https://www.buymeacoffee.com/webdevliam" target="_blank" rel="noopener noreferrer">
-                        Coffee
+                        <strong>Buy</strong> me a <strong>cof</strong>fee
                     </a>
                 </div>
                 <div class="col wdl-container">
@@ -85,6 +92,7 @@
         </div>
     </div>
 
+	<script type="text/javascript" src="assets/scripts/colours.js"></script>
 	<script type="text/javascript" src="assets/scripts/popup.js"></script>
 </body>
 
