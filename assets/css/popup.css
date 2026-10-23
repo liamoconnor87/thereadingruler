@@ -1,11 +1,27 @@
+:root {
+    --rr-accent: rgb(32, 254, 150);
+    --rr-accent-dim: rgba(32, 254, 150, 0.6);
+    --rr-bg: var(--rr-bg-colour);
+    --rr-shadow: var(--rr-black);
+    --rr-track: color-mix(in srgb, var(--rr-line-colour) 35%, black);
+    --rr-black: rgb(0, 0, 0);
+    --rr-white: rgb(240, 238, 235);
+    --rr-logo-web: rgb(255, 237, 96);
+    --rr-logo-dev: rgb(0, 255, 255);
+    --rr-logo-liam: rgb(0, 255, 148);
+    --rr-logo-hover: rgb(212, 0, 255);
+    --rr-line-colour: var(--rr-accent);
+    --rr-bg-colour: rgb(27, 36, 50);
+    --rr-title-underline: var(--rr-line-colour);
+}
+
 body {
-    font-size: 19px;
-    color: rgb(23, 232, 138);
-    background-color: rgb(27, 46, 83);
-    background-color: rgb(53, 43, 61);
-    width: 355px;
-    font-family: "Sixtyfour", sans-serif;
-    text-shadow: 5px 5px 0 rgb(8, 14, 24);
+    font-size: 23px;
+    color: var(--rr-white);
+    background-color: var(--rr-bg);
+    width: 320px;
+    font-family: "OpenDyslexic", sans-serif;
+    text-shadow: 5px 5px 0 var(--rr-shadow);
 }
 
 .pointer {
@@ -13,37 +29,40 @@ body {
 }
 
 .rr-border {
-    border: 3px solid rgb(240, 109, 255);
+    border: 3px solid var(--rr-line-colour);
     height: 100%;
     width: 100%;
 }
 
 #switch-status {
     text-align: center;
-    font-size: 15px;
-    margin-top: 5px;
-    color: white;
+    font-size: 18px;
+    line-height: 1;
+    margin: 0;
+    color: var(--rr-white);
 }
 
 .rr-title {
     padding: 10px 0;
     height: auto;
     margin: auto 0;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
     text-align: center;
-    text-decoration: underline;
+    text-decoration: underline var(--rr-title-underline);
 }
 
 /* SWITCH */
 .switcher {
-    margin: auto;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .switch-container {
-    margin: auto;
+    display: flex;
 }
 
 /* The switch - the box around the slider */
@@ -69,10 +88,10 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgb(60, 26, 64);
+    background-color: var(--rr-track);
     -webkit-transition: .2s;
     transition: .2s;
-    box-shadow: 5px 5px 0 rgb(8, 14, 24);
+    box-shadow: 5px 5px 0 var(--rr-shadow);
 }
 
 .slider:before {
@@ -82,14 +101,14 @@ body {
     width: 16px;
     left: 4px;
     bottom: 4px;
-    background-color: white;
+    background-color: var(--rr-white);
     -webkit-transition: .2s;
     transition: .2s;
-    box-shadow: 2px 2px 0 rgb(0, 0, 0);
+    box-shadow: 2px 2px 0 var(--rr-black);
 }
 
 input:checked+.slider{
-    background-color: rgb(240, 109, 255);
+    background-color: var(--rr-line-colour);
 }
 
 input:checked+.slider:before {
@@ -99,36 +118,33 @@ input:checked+.slider:before {
 }
 
 .switch-divider {
-    border-bottom: 1px solid rgb(240, 109, 255);
+    border-bottom: 1px solid var(--rr-line-colour);
 }
 
 /* SETTINGS */
 .settings {
-    font-size: 11px;
+    font-size: 14px;
     padding-top: 18px;
     padding-bottom: 12px;
-    letter-spacing: -1.5px;
 }
 
 .settings input {
     background-color: inherit;
     text-align: end;
     float: left;
-    letter-spacing: -1px;
-    font-size: 10.5px;
+    font-size: 13px;
     width: 100%;
-    border: rgb(60, 26, 64);
-    outline: rgb(60, 26, 64);
-    background: rgb(60, 26, 64);
-    box-shadow: 2px 2px 0 rgb(0, 0, 0);
+    border: var(--rr-track);
+    outline: var(--rr-track);
+    background: var(--rr-track);
+    box-shadow: 2px 2px 0 var(--rr-black);
     -webkit-transition: .1s;
     transition: .1s;
     font-weight: bold;
 }
 
 #overlay-opacity {
-    width: 90%;
-
+    width: 85%;
 }
 
 .arrows {
@@ -145,19 +161,59 @@ input:checked+.slider:before {
 
 .col-setting {
     margin-bottom: 8px;
-    font-weight: 600;
 }
 
 .col-setting-val {
-    color: white;
+    color: var(--rr-white);
     width: auto;
     text-align: right;
     padding: 0;
     margin-right: 12px;
 }
 
+.colour-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.colour-row input[type="text"] {
+    float: none;
+    width: 100%;
+}
+
+.colour-row .colour-picker {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    background: none;
+}
+
+.colour-row .colour-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: 0;
+}
+
+.colour-row .colour-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 0;
+}
+
+.colour-row .colour-picker::-moz-color-swatch {
+    border: none;
+    border-radius: 0;
+}
+
 .set{
-    color: rgb(240, 109, 255, 0.6);
+    color: var(--rr-accent-dim);
+}
+
+#arrow-left, #arrow-right {
+    color: var(--rr-line-colour);
 }
 
 #ruler-position {
@@ -170,13 +226,13 @@ input:checked+.slider:before {
 
 /* FOOTER */
 .footer {
-    border-top: 1px solid rgb(240, 109, 255);
+    border-top: 1px solid var(--rr-line-colour);
     padding-bottom: 5px;
 }
 
 .buy-coffee {
-    font-size: 12px;
-    color: rgb(255, 255, 255) !important;
+    font-size: 14px;
+    color: var(--rr-white) !important;
     text-decoration: none;
     width: 100%;
 }
@@ -191,27 +247,23 @@ input:checked+.slider:before {
 
 /* LOGO  */
 #webdevliam-logo {
-    font-size: 8px;
+    font-size: 17px !important;
     text-decoration: none;
 }
 
 .web {
-    color: rgb(248, 247, 2);
+    color: var(--rr-logo-web);
 }
 
 .dev {
-    color: rgb(35, 222, 241);
+    color: var(--rr-logo-dev);
 }
 
 .liam {
-    color: rgb(87, 247, 2);
+    color: var(--rr-logo-liam);
 }
 
 #webdevliam-logo:hover {
     text-decoration: underline;
-    color: rgb(240, 109, 255);
-}
-
-#webdevliam-logo {
-    font-size: 15px !important;
+    color: var(--rr-logo-hover);
 }
